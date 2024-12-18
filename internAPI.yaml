@@ -1,0 +1,213 @@
+openapi: 3.0.0
+x-stoplight:
+  id: 5o9r9ehfu2yqg
+info:
+  title: Intern Management API
+  description: API for managing intern records and project assignments.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000'
+    description: Development Server
+paths:
+  /interns:
+    get:
+      summary: Get all interns
+      description: Retrieve a list of all interns.
+      responses:
+        '200':
+          description: A list of interns.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Intern'
+              example:
+                - id: 1
+                  name: Karim Sharaf
+                  email: karimsh@example.com
+                  department: Software Engineering
+                  project: Inventory Management System
+                - id: 2
+                  name: john atef
+                  email: johnat@example.com
+                  department: UI/UX Design
+                  project: Website Redesign
+      x-stoplight:
+        id: st2tzdxxst7ie
+    post:
+      summary: Add a new intern
+      description: Add a new intern to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Intern'
+            example:
+              name: ahmed khaled
+              email: ahmedkh@example.com
+              department: Data Science
+              project: AI Recommendation Engine
+      responses:
+        '201':
+          description: Intern added successfully.
+          content:
+            application/json:
+              example:
+                id: 3
+                name: jana mohamed
+                email: janaa@example.com
+                department: Data Science
+                project: AI Recommendation Engine
+        '400':
+          description: Invalid input.
+      x-stoplight:
+        id: 3kanxgv6zb3zr
+  '/interns/{id}':
+    get:
+      summary: Get an intern by ID
+      description: Retrieve details of a specific intern by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the intern to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Intern details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Intern'
+              example:
+                id: 1
+                name: emad bakr
+                email: emadbakr@example.com
+                department: Software Engineering
+                project: Inventory Management System
+        '404':
+          description: Intern not found.
+      x-stoplight:
+        id: 3hrm6bbr7h4ns
+    put:
+      summary: Update an intern's details
+      description: Update the information of an intern by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the intern to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Intern'
+            example:
+              name: ezz eldin
+              email: ezzo@example.com
+              department: Software Engineering
+              project: Inventory Management System - V2
+      responses:
+        '200':
+          description: Intern updated successfully.
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Mohamed Ebrahim
+                email: mohamedEb@example.com
+                department: Software Engineering
+                project: Inventory Management System - V2
+        '400':
+          description: Invalid input.
+        '404':
+          description: Intern not found.
+      x-stoplight:
+        id: kxzl1krs37521
+    delete:
+      summary: Delete an intern by ID
+      description: Remove an intern from the system.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the intern to delete.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Intern deleted successfully.
+        '404':
+          description: Intern not found.
+      x-stoplight:
+        id: ugwl5mum64fyi
+  /projects:
+    get:
+      summary: Get all projects
+      description: Retrieve a list of all projects available for assignment.
+      responses:
+        '200':
+          description: A list of projects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+              example:
+                - id: 1
+                  name: AI Recommendation Engine
+                  description: An AI-based system for suggesting products to users.
+                - id: 2
+                  name: Website Redesign
+                  description: Revamping the corporate website for a modern look.
+      x-stoplight:
+        id: jd2t8f8r69up7
+components:
+  schemas:
+    Intern:
+      type: object
+      required:
+        - name
+        - email
+        - department
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: mostafa ahmed
+        email:
+          type: string
+          example: mostafaah@example.com
+        department:
+          type: string
+          example: Software Engineering
+        project:
+          type: string
+          example: Inventory Management System
+      x-stoplight:
+        id: oslut304i2rv4
+    Project:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: AI Recommendation Engine
+        description:
+          type: string
+          example: An AI-based system for suggesting products to users.
+      x-stoplight:
+        id: nkiji7pjeajmj
